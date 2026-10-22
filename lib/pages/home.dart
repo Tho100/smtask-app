@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
+import 'package:smtask/helper/date_help.dart';
 import 'package:smtask/widgets/navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,15 +16,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  String _currentDate() {
+  String _dateAsOfCardMessage() {
+    
+    final dateHelp = DateHelp.currentDate();
 
-    final date = DateTime.now();
+    final day = dateHelp['day'];
+    final month = dateHelp['month'];
+    final year = dateHelp['year'];
 
-    final day = date.day;
-    final month = date.month;
-    final year = date.year;
-
-    return 'As of $day/$month/$year'; 
+    return 'As of $day/$month/$year';
 
   }
 
@@ -249,7 +250,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 12),
 
               Text(
-                _currentDate(),
+                _dateAsOfCardMessage(),
                 style: GoogleFonts.inter(
                   fontSize: 12,
                   color: ColorTheme.secondaryGray,
