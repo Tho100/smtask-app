@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
+import 'package:smtask/dialogs/task_options.dart';
 import 'package:smtask/pages/home.dart';
 import 'package:smtask/pages/insights.dart';
 
@@ -66,9 +67,10 @@ class MainNavigationBar {
             style: ElevatedButton.styleFrom(
               shape: const CircleBorder(),
               backgroundColor: ColorTheme.mainOrange,
-              fixedSize: const Size(42, 42)
+              fixedSize: const Size(42, 42),
+              padding: EdgeInsets.zero
             ),
-            onPressed: () => {},
+            onPressed: () => TaskOptions().show(context),
             child: const Icon(CupertinoIcons.add, color: Colors.white, size: 20),
           ),
           label: ''
