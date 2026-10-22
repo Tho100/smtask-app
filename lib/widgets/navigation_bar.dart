@@ -51,28 +51,37 @@ class MainNavigationBar {
         }
 
       },
-      items: const [
-        BottomNavigationBarItem(
+      items: [
+
+        const BottomNavigationBarItem(
           icon: Padding(
             padding: EdgeInsets.only(bottom: 4.0),
             child: Icon(CupertinoIcons.home),
           ), 
           label: 'Home'
         ),
+
         BottomNavigationBarItem(
-          icon: Padding(
-            padding: EdgeInsets.only(bottom: 4.0),
-            child: Icon(Icons.add_circle_outline),
-          ), 
-          label: 'Add'
+          icon: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              backgroundColor: ColorTheme.mainOrange,
+              fixedSize: const Size(42, 42)
+            ),
+            onPressed: () => {},
+            child: const Icon(CupertinoIcons.add, color: Colors.white, size: 20),
+          ),
+          label: ''
         ),
-        BottomNavigationBarItem(
+
+        const BottomNavigationBarItem(
           icon: Padding(
             padding: EdgeInsets.only(bottom: 4.0),
             child: Icon(CupertinoIcons.graph_square),
           ), 
           label: 'Insights'
         ),
+
       ]
        
     );
