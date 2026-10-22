@@ -1,0 +1,295 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:smtask/colors.dart';
+import 'package:smtask/widgets/navigation_bar.dart';
+
+class HomePage extends StatefulWidget {
+
+  const HomePage ({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+
+}
+
+class _HomePageState extends State<HomePage> {
+
+  String _currentDate() {
+
+    final date = DateTime.now();
+
+    final day = date.day;
+    final month = date.month;
+    final year = date.year;
+
+    return 'As of $day/$month/$year'; 
+
+  }
+
+  Widget _topBar() {
+    return Padding(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.08, left: 8, right: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              backgroundColor: ColorTheme.mainOrange,
+              fixedSize: const Size(45, 45)
+            ),
+            onPressed: () {}, 
+            child: const Icon(CupertinoIcons.profile_circled, size: 30)
+          ),
+          
+          const Spacer(),
+
+          Text(
+            'smtask',
+            style: GoogleFonts.inter(
+              fontSize: 26,
+              fontWeight: FontWeight.w900,
+              color: ColorTheme.mainOrange
+            ),
+          ),
+
+
+          const Spacer(),
+
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              backgroundColor: ColorTheme.mainOrange,
+              fixedSize: const Size(45, 45)
+            ),
+            onPressed: () {}, 
+            child: const Icon(CupertinoIcons.settings, size: 25)
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  Widget _completedTaskCard({required String title, required String description, required IconData icon}) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.92,
+      height: 85,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: ColorTheme.bgBlack,
+        border: Border.all(
+          color: ColorTheme.secondaryGray
+        )
+      ),
+      child: Row(
+        children: [
+
+          const SizedBox(width: 15),
+
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: ColorTheme.mainOrange,
+              borderRadius: BorderRadius.circular(18)
+            ),
+            child: Icon(icon, color: Colors.white, size: 20),
+          ),
+
+          const SizedBox(width: 12),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.inter(
+                  fontSize: 15,
+                  color: ColorTheme.secondaryWhite,
+                  fontWeight: FontWeight.w700
+                ),
+              ),
+
+              const SizedBox(height: 4),
+
+              Text(
+                description,
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  color: ColorTheme.thirdWhite,
+                  fontWeight: FontWeight.w700
+                ),
+              ),
+            ],
+          ),
+
+          const Spacer(),
+
+          Padding(
+            padding: const EdgeInsets.only(right: 18.0),
+            child: Text(
+              '100',
+              style: GoogleFonts.inter(
+                color: Colors.white,
+                fontSize: 22,
+                fontWeight: FontWeight.w800      
+              ),
+            ),
+          )
+
+        ],
+      ),
+    );
+  }
+
+  Widget _completedTasks() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text(
+            'Completed Task',
+            style: GoogleFonts.inter(
+              color: ColorTheme.mainOrange,
+              fontSize: 13,
+              fontWeight: FontWeight.w700
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 15),
+
+        _completedTaskCard(
+          title: 'Rockage Loaded', 
+          description: 'Rockages loaded from \nthe warehouse truck',
+          icon: Icons.local_shipping
+        ),
+
+        const SizedBox(height: 10),
+
+        _completedTaskCard(
+          title: 'Aisles Stocked', 
+          description: 'Aisles fully stocked',
+          icon: Icons.shelves
+        ),
+
+        const SizedBox(height: 10),
+
+        _completedTaskCard(          
+          title: 'Planograms Completed', 
+          description: 'Bays planogram completed',
+          icon: Icons.grid_on
+        ),
+
+        const SizedBox(height: 10),
+
+      ],
+    );
+  }
+
+  Widget _mainCard() {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          gradient: const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Color.fromARGB(255, 240, 185, 163),
+              ColorTheme.mainOrange,
+            ]
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 220, 148, 107),
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: Offset(0, 4)
+            )
+          ]
+        ),
+        width: MediaQuery.of(context).size.width * 0.92,
+        height: 150,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              const SizedBox(height: 8),
+
+              Text(
+                'Your Points',
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  color: ColorTheme.secondaryGray,
+                  fontWeight: FontWeight.w800
+                ),
+              ),
+
+              const SizedBox(height: 4),
+
+              Text(
+                '255',
+                style: GoogleFonts.inter(
+                  fontSize: 42,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              Text(
+                _currentDate(),
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  color: ColorTheme.secondaryGray,
+                  fontWeight: FontWeight.w700
+                ),
+              )
+
+            ],
+          ),
+        ),
+  
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: MainNavigationBar(currentIndex: 0).build(context),
+      backgroundColor: ColorTheme.bgBlack,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+
+            _topBar(),
+            
+            const SizedBox(height: 24),
+
+            _mainCard(),
+
+            const SizedBox(height: 35),
+
+            _completedTasks(),
+            
+            const SizedBox(height: 10),
+
+          ],
+        ),
+      ),
+    );
+
+  }
+}
