@@ -270,7 +270,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: MainNavigationBar(currentIndex: 0).build(context),
-      backgroundColor: ColorTheme.bgBlack,
       body: SingleChildScrollView(
         child: Column(
           children: [

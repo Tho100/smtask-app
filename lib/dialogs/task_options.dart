@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
+import 'package:smtask/pages/task_completed.dart';
+import 'package:smtask/shared/task_type.dart';
 
 class TaskOptions {
   
-  Widget _buildOption({required String option, required IconData icon}) {
+  Widget _buildOption({
+    required BuildContext context, 
+    required TaskType option, 
+    required IconData icon
+  }) {
+
+    final typeToString = {
+      TaskType.truckLoaded: 'Truck',
+      TaskType.aisleStocked: 'Aisle',
+      TaskType.planoCompleted: 'Planogram'
+    };
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -19,7 +32,7 @@ class TaskOptions {
             borderRadius: BorderRadius.circular(25),
           ),
           child: InkWell(
-            onTap: () => print("HI"),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TaskCompleted(type: option))),
             borderRadius: BorderRadius.circular(25), 
             child: Center( 
               child: Container(
@@ -38,7 +51,7 @@ class TaskOptions {
         const SizedBox(height: 10),
 
         Text(
-          option,
+          typeToString[option]!,
           style: GoogleFonts.inter(
             color: ColorTheme.secondaryWhite,
             fontWeight: FontWeight.w700,
@@ -82,15 +95,15 @@ class TaskOptions {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
-                    _buildOption(option: 'Truck', icon: Icons.local_shipping),
+                    _buildOption(context: context, option: TaskType.truckLoaded, icon: Icons.local_shipping),
 
                     const SizedBox(width: 18),
 
-                    _buildOption(option: 'Aisle', icon: Icons.shelves),
+                    _buildOption(context: context, option: TaskType.aisleStocked, icon: Icons.shelves),
 
                     const SizedBox(width: 18),
 
-                    _buildOption(option: 'Planogram', icon: Icons.grid_on),
+                    _buildOption(context: context, option: TaskType.planoCompleted, icon: Icons.grid_on),
 
                   ],
                 ),
