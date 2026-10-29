@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smtask/colors.dart';
 import 'package:smtask/pages/home.dart';
 void main() {
+  WidgetsFlutterBinding.ensureInitialized(); 
   runApp(const MyApp());
 }
 

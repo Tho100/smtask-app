@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
 import 'package:smtask/helper/date_help.dart';
+import 'package:smtask/helper/task_type_to_string.dart';
 import 'package:smtask/shared/data/local_storage.dart';
+import 'package:smtask/shared/task_type.dart';
 import 'package:smtask/widgets/navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,13 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  void _loadTaskStats() async {
-
-    final tasksData = await LocalStorage().readTaskData();
-
-    print(tasksData);
-
-  }
+  late Future<Map<String, int>> _taskDataFuture;
 
   String _dateAsOfCardMessage() {
     
@@ -83,7 +79,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _completedTaskCard({required String title, required String description, required IconData icon}) {
+  Widget _completedTaskCard({
+    required String title, 
+    required String description, 
+    required IconData icon, 
+    required int value
+  }) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.92,
       height: 85,
@@ -142,7 +143,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.only(right: 18.0),
             child: Text(
-              '100',
+              value.toString(),
               style: GoogleFonts.inter(
                 color: Colors.white,
                 fontSize: 22,
@@ -157,49 +158,66 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _completedTasks() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+    return FutureBuilder(
+      future: _taskDataFuture,
+      builder: (_, snapshot) {
 
-        Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Text(
-            'Completed Task',
-            style: GoogleFonts.inter(
-              color: ColorTheme.mainOrange,
-              fontSize: 13,
-              fontWeight: FontWeight.w700
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(color: ColorTheme.mainOrange)
+          );
+        }
+
+        final taskStats = snapshot.data!;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(
+                'Completed Task',
+                style: GoogleFonts.inter(
+                  color: ColorTheme.mainOrange,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700
+                ),
+              ),
             ),
-          ),
-        ),
 
-        const SizedBox(height: 15),
+            const SizedBox(height: 15),
 
-        _completedTaskCard(
-          title: 'Rockage Loaded', 
-          description: 'Rockages loaded from \nthe warehouse truck',
-          icon: Icons.local_shipping
-        ),
+            _completedTaskCard(
+              title: 'Rockage Loaded', 
+              description: 'Rockages loaded from \nthe warehouse truck',
+              icon: Icons.local_shipping,
+              value: taskStats[TaskTypeToString.convert(task: TaskType.truckLoaded)]!
+            ),
 
-        const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-        _completedTaskCard(
-          title: 'Aisles Stocked', 
-          description: 'Aisles fully stocked',
-          icon: Icons.shelves
-        ),
+            _completedTaskCard(
+              title: 'Aisles Stocked', 
+              description: 'Aisles fully stocked',
+              icon: Icons.shelves,
+              value: taskStats[TaskTypeToString.convert(task: TaskType.aisleStocked)]!
+            ),
 
-        const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-        _completedTaskCard(          
-          title: 'Planograms Completed', 
-          description: 'Bays planogram completed',
-          icon: Icons.grid_on
-        ),
+            _completedTaskCard(          
+              title: 'Planograms Completed', 
+              description: 'Bays planogram completed',
+              icon: Icons.grid_on,
+              value: taskStats[TaskTypeToString.convert(task: TaskType.planoCompleted)]!
+            ),
 
-        const SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-      ],
+          ],
+        );
+      },
     );
   }
 
@@ -277,7 +295,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _loadTaskStats();
+    _taskDataFuture = LocalStorage().readTaskData();
     super.initState();
   }
 
