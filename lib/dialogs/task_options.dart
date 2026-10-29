@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
+import 'package:smtask/helper/task_type_to_string.dart';
 import 'package:smtask/pages/task_completed.dart';
 import 'package:smtask/shared/task_type.dart';
 
@@ -11,13 +12,6 @@ class TaskOptions {
     required TaskType option, 
     required IconData icon
   }) {
-
-    final typeToString = {
-      TaskType.truckLoaded: 'Truck',
-      TaskType.aisleStocked: 'Aisle',
-      TaskType.planoCompleted: 'Planogram'
-    };
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -51,7 +45,7 @@ class TaskOptions {
         const SizedBox(height: 10),
 
         Text(
-          typeToString[option]!,
+          TaskTypeToString.convert(task: option),
           style: GoogleFonts.inter(
             color: ColorTheme.secondaryWhite,
             fontWeight: FontWeight.w700,
