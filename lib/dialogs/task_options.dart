@@ -26,7 +26,13 @@ class TaskOptions {
             borderRadius: BorderRadius.circular(25),
           ),
           child: InkWell(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TaskCompleted(type: option))),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => TaskCompleted(type: option))
+              );
+            },
             borderRadius: BorderRadius.circular(25), 
             child: Center( 
               child: Container(
