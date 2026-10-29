@@ -5,9 +5,9 @@ import 'package:smtask/shared/task_type.dart';
 
 class TaskCompleted extends StatefulWidget {
 
-  TaskType type;
+  final TaskType type;
 
-  TaskCompleted({super.key, required this.type});
+  const TaskCompleted({super.key, required this.type});
 
   @override
   State<TaskCompleted> createState() => _TaskCompletedState();
