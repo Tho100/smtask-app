@@ -7,11 +7,13 @@ import 'package:smtask/shared/task_type.dart';
 // TODO: REname to TaskLocalStorage
 class LocalStorage {
 
-  final _defaultData = {
-    'truck': 0,
-    'aisle': 0,
-    'plano': 0,
-  };
+  Map<String, int> _defaultData() {
+    return {
+      TaskTypeToString.convert(task: TaskType.truckLoaded): 0,
+      TaskTypeToString.convert(task: TaskType.aisleStocked): 0,
+      TaskTypeToString.convert(task: TaskType.planoCompleted): 0,
+    };
+  }
 
   Future<File> get _localFile async {
     final directory = await getApplicationDocumentsDirectory();
@@ -35,7 +37,7 @@ class LocalStorage {
       final file = await _localFile;
 
       if (!await file.exists()) {
-        return _defaultData;
+        return _defaultData();
       }
 
       final contents = await file.readAsString();
@@ -45,12 +47,12 @@ class LocalStorage {
       return Map<String, int>.from(decodedMap);
 
     } catch (e) {
-      return _defaultData;
+      return _defaultData();
     }
 
   }
 
-  void updateCompletedTask({
+  Future<void> updateCompletedTask({
     required TaskType type, 
     required int totalCompletedTask
   }) async {
@@ -59,7 +61,7 @@ class LocalStorage {
 
     final currentData = await readTaskData();
 
-    currentData[typeString] = totalCompletedTask;
+    currentData[typeString] = currentData[typeString]! + totalCompletedTask;
 
     await saveTaskData(data: currentData);
 
