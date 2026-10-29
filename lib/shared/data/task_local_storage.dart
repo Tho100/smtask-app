@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:smtask/helper/task_type_to_string.dart';
 import 'package:smtask/shared/task_type.dart';
-// TODO: REname to TaskLocalStorage
-class LocalStorage {
+
+class TaskLocalStorage {
 
   Map<String, int> _defaultData() {
     return {

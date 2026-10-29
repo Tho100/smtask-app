@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
 import 'package:smtask/dialogs/task_finished.dart';
-import 'package:smtask/shared/data/local_storage.dart';
+import 'package:smtask/shared/data/task_local_storage.dart';
 import 'package:smtask/shared/task_type.dart';
 
 class TaskCompleted extends StatefulWidget {
@@ -24,7 +24,7 @@ class _TaskCompletedState extends State<TaskCompleted> {
 
     final totalCompletedTask = int.parse(_totalTaskCompletedController.text);
 
-    await LocalStorage().updateCompletedTask(
+    await TaskLocalStorage().updateCompletedTask(
       type: widget.type, totalCompletedTask: totalCompletedTask
     );
 

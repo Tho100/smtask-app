@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
 import 'package:smtask/helper/date_help.dart';
 import 'package:smtask/helper/task_type_to_string.dart';
-import 'package:smtask/shared/data/local_storage.dart';
+import 'package:smtask/shared/data/task_local_storage.dart';
 import 'package:smtask/shared/task_type.dart';
 import 'package:smtask/widgets/navigation_bar.dart';
 
@@ -295,7 +295,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _taskDataFuture = LocalStorage().readTaskData();
+    _taskDataFuture = TaskLocalStorage().readTaskData();
     super.initState();
   }
 
