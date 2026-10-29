@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
+import 'package:smtask/dialogs/task_finished.dart';
 import 'package:smtask/shared/data/local_storage.dart';
 import 'package:smtask/shared/task_type.dart';
 
@@ -19,7 +20,7 @@ class _TaskCompletedState extends State<TaskCompleted> {
 
   final _totalTaskCompletedController = TextEditingController();
 
-  void _onTaskCompleted() async {
+  Future<void> _onTaskCompleted() async {
 
     final totalCompletedTask = int.parse(_totalTaskCompletedController.text);
 
@@ -118,7 +119,11 @@ class _TaskCompletedState extends State<TaskCompleted> {
                   ),
                   backgroundColor: ColorTheme.mainOrange,
                 ),
-                onPressed: _onTaskCompleted, 
+                onPressed: () async {
+                  await _onTaskCompleted().then(
+                    (_) => TaskFinished().show(context)
+                  );
+                }, 
                 child: Text(
                   'Done',
                   style: GoogleFonts.inter(
