@@ -53,7 +53,7 @@ class TaskFinished {
                   child: Text(
                     'Continue',
                     style: GoogleFonts.inter(
-                      color: Colors.white,
+                      color: ColorTheme.mainOrange,
                       fontWeight: FontWeight.w700,
                       fontSize: 14
                     ),

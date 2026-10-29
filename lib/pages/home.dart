@@ -254,12 +254,31 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(height: 8),
 
-              Text(
-                'Your Points',
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  color: ColorTheme.secondaryGray,
-                  fontWeight: FontWeight.w800
+              SizedBox(
+                height: 15,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    Text(
+                      'Your Points',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: ColorTheme.secondaryGray,
+                        fontWeight: FontWeight.w800
+                      ),
+                    ),
+
+                    const Spacer(),
+
+                    Transform.translate(
+                      offset: const Offset(0, -2),
+                      child: const Icon(Icons.star_outline, color: ColorTheme.bgBlack, size: 25)
+                    ),
+
+                    const SizedBox(width: 5),
+
+                  ],
                 ),
               ),
 
