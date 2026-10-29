@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smtask/colors.dart';
 import 'package:smtask/helper/date_help.dart';
+import 'package:smtask/shared/data/local_storage.dart';
 import 'package:smtask/widgets/navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +16,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  void _loadTaskStats() async {
+
+    final tasksData = await LocalStorage().readTaskData();
+
+    print(tasksData);
+
+  }
 
   String _dateAsOfCardMessage() {
     
@@ -267,6 +276,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    _loadTaskStats();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: MainNavigationBar(currentIndex: 0).build(context),
@@ -292,4 +307,5 @@ class _HomePageState extends State<HomePage> {
     );
 
   }
+
 }
